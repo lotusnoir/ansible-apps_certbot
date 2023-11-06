@@ -1,0 +1,45 @@
+---
+certbot_dns_plugin: ""
+#certbot_dns_plugin: "dns-ovh"
+
+##### Ovh creds
+certbot_dns_ovh_application_key: ""
+certbot_dns_ovh_application_secret: ""
+certbot_dns_ovh_consumer_key: ""
+
+certbot_cli_commands: |
+  max-log-backups = 0
+  preconfigured-renewal = True
+
+  dns-ovh-credentials = /etc/letsencrypt/ovh_creds.ini
+  dns-ovh-propagation-seconds = 80
+
+certbot_default_email: "test@example.fr"
+certbot_create_method: "standalone" #or webroot
+certbot_testmode: false
+certbot_certs: []
+#  - email: janedoe@example.com
+#    webroot: "/var/www/html/"
+#    domains:
+#      - example1.com
+#      - example2.com
+#  - domains:
+#      - example3.com
+
+certbot_create_standalone_stop_services: []
+#  - nginx
+#  - apache
+#  - varnish
+
+certbot_create_command: >-
+  certbot certonly --noninteractive --agree-tos
+  --email {{ item.email | default(certbot_default_email) }}
+  {{ '--test-cert' if certbot_testmode else '' }}
+  {% if certbot_dns_plugin | length > 0 %}--{{ certbot_dns_plugin }}{% else %}--{{ certbot_create_method }}{% endif %}
+  {{ '--webroot-path ' if certbot_create_method == 'webroot'  else '' }}
+  {{ item.webroot | default(certbot_webroot) if certbot_create_method == 'webroot' else '' }}
+  -d {{ item.domains | join(',') }}
+  {% if  certbot_create_standalone_stop_services and certbot_create_method == 'standalone' %}
+  --pre-hook /etc/letsencrypt/renewal-hooks/pre/stop_services
+  --post-hook /etc/letsencrypt/renewal-hooks/post/start_services
+  {% endif %}

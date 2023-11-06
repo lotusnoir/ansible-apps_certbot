@@ -1,0 +1,11 @@
+---
+certbot_packages:
+  - certbot
+  - python3-certbot-dns-ovh
+
+# Use the ACME v2 staging URI for testing things
+#certbot_acme_url_staging: "https://acme-staging-v02.api.letsencrypt.org/directory"
+# Production ACME v2 API endpoint
+#certbot_acme_url_prod: "https://acme-v02.api.letsencrypt.org/directory"
+
+certbot_webroot: /etc/letsencrypt/renewal/
