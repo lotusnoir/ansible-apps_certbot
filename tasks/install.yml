@@ -20,12 +20,14 @@
     group: root
     mode: 0640
 
-- include_tasks: create-cert-standalone.yml
+- name: Create standalone
+  ansible.builtin.include_tasks: create-cert-standalone.yml
   with_items: "{{ certbot_certs }}"
   when:
     - certbot_create_method == 'standalone'
 
-- include_tasks: create-cert-webroot.yml
+- name: Create webroot
+  ansible.builtin.include_tasks: create-cert-webroot.yml
   with_items: "{{ certbot_certs }}"
   when:
     - certbot_create_method == 'webroot'
