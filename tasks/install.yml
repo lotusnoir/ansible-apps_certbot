@@ -3,6 +3,10 @@
   ansible.builtin.package:
     name: "{{ certbot_packages }}"
     state: present
+  register: pkg_result
+  retries: 12
+  delay: 10
+  until: pkg_result is success
 
 - name: "Ovh creds Template"
   ansible.builtin.template:
@@ -10,7 +14,7 @@
     dest: "/etc/letsencrypt/ovh_creds.ini"
     owner: root
     group: root
-    mode: 0600
+    mode: '0600'
 
 - name: "LE cli Template"
   ansible.builtin.template:
@@ -18,15 +22,15 @@
     dest: "/etc/letsencrypt/cli.ini"
     owner: root
     group: root
-    mode: 0640
+    mode: '0640'
 
-- name: Create standalone
+- name: "Create standalone"
   ansible.builtin.include_tasks: create-cert-standalone.yml
   with_items: "{{ certbot_certs }}"
   when:
     - certbot_create_method == 'standalone'
 
-- name: Create webroot
+- name: "Create webroot"
   ansible.builtin.include_tasks: create-cert-webroot.yml
   with_items: "{{ certbot_certs }}"
   when:

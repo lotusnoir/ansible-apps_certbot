@@ -7,7 +7,7 @@
 - name: Create webroot directory if it doesn't exist yet
   ansible.builtin.file:
     path: "{{ item.webroot | default(certbot_webroot) }}"
-    mode: 0755
+    mode: '0755'
     state: directory
 
 - name: Generate new certificate if one doesn't exist.
