@@ -1,8 +1,7 @@
 ---
 certbot_dns_plugin: ""
-#certbot_dns_plugin: "dns-ovh"
 
-##### Ovh creds
+### Ovh creds
 certbot_dns_ovh_application_key: ""
 certbot_dns_ovh_application_secret: ""
 certbot_dns_ovh_consumer_key: ""
@@ -15,7 +14,7 @@ certbot_cli_commands: |
   dns-ovh-propagation-seconds = 80
 
 certbot_default_email: "test@example.fr"
-certbot_create_method: "standalone" #or webroot
+certbot_create_method: "standalone"
 certbot_testmode: false
 certbot_certs: []
 #  - email: janedoe@example.com
