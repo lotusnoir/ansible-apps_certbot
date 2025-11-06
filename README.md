@@ -25,6 +25,7 @@ Deploy certbot and manage certs)
 
 install certbot and manage certs install, support dns and wildcard generation, i made it for ovh certificates generation but can be used for any
 
+
 ## Requirements
 
 none
@@ -42,7 +43,6 @@ See [variables](/defaults/main.yml) for more details.
           gather_facts: true
           roles:
             - role: ansible-apps_certbot
-
 
 ## License
 

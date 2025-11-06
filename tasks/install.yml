@@ -3,10 +3,10 @@
   ansible.builtin.package:
     name: "{{ certbot_packages }}"
     state: present
-  register: pkg_result
+  register: __pkg_result
   retries: 12
   delay: 10
-  until: pkg_result is success
+  until: __pkg_result is success
 
 - name: "Ovh creds Template"
   ansible.builtin.template:
