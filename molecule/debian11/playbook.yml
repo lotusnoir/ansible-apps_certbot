@@ -1,0 +1,22 @@
+---
+- name: Run role
+  hosts: all
+  become: true
+  any_errors_fatal: true
+
+  vars:
+    certbot_default_email: "lotus.noir@gmail.com"
+    certbot_testmode: true
+    certbot_certs:
+      - email: lotus.noir@gmail.com
+        webroot: "/var/www/html/"
+        domains:
+          - example1.com
+          - example2.com
+      - domains:
+          - example3.com
+
+  tasks:
+    - name: Include role
+      ansible.builtin.include_role:
+        name: ansible-apps_certbot
